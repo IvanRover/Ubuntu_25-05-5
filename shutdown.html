@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ubuntu Boot System</title>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ubuntu-orange: #E95420;
+    --ubuntu-aubergine: #2C001E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    color: #fff;
+    font-family: 'Ubuntu', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  #boot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #logo-ascii {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 7px; /* Немного уменьшил, чтобы влезало на большинство экранов */
+    line-height: 1.1;
+    color: var(--ubuntu-orange);
+    white-space: pre;
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in forwards;
+  }
+
+  .spinner {
+    width: 35px;
+    height: 35px;
+    border: 4px solid rgba(, 0, 0, 0.1);
+    border-top: 4px solid var(--ubuntu-orange);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* Эффект выцветания перед переходом */
+  .fade-out {
+    animation: fadeOut 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+</style>
+</head>
+<body>
+
+  <div id="boot-container">
+    <pre id="logo-ascii">
+	.:::::::::.                  :: ::                              ::
+	::                           :: ::                              ::
+	::       .. .:::. .:::. .:::.:: ::.:::. ::.     .::  .:::::::.  ::
+	::       :: :   : :   : :    :: ::    : '::.  .::'  ::       :: ::
+	':::::::::' ':::' ':::' ':::':: ::':::'  '::::::    ::::::::::' ::
+	""""""""""""""""""""""""""""""""""""""""    .::     ::.        
+	----------------------------------------- .::'      ':::::::::  ::
+</pre>
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    // Настройки
+    const NEXT_PAGE = "bootup.html"; // Имя твоего файла
+    const BOOT_TIME = 4500; // Сколько миллисекунд показывать загрузку
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        // Добавляем эффект исчезновения
+        document.body.classList.add('fade-out');
+        
+        // Через 800мс (время анимации fade-out) переходим на другой файл
+        setTimeout(() => {
+          window.location.href = NEXT_PAGE;
+        }, 800);
+        
+      }, BOOT_TIME);
+    });
+  </script>
+</body>
+</html>
